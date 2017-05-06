@@ -1,0 +1,22 @@
+.virtuoso {
+  text-align: center;
+}
+
+.neck {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.string {
+  width: 100%;
+  border: 1px solid blue;
+  text-align: left;
+}
+
+.fret {
+  display: inline-block;
+  padding: 0.5em;
+  &.selected {
+    background-color: green;
+  }
+}
