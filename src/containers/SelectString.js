@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { transpose, note } from 'tonal';
 import _ from 'lodash';
 
-import { selectNote, deselectNote, Types } from './Actions';
-import { isNoteEqual, findNote } from './Util';
+import { selectNote, deselectNote } from '../Actions';
+import { isNoteEqual, findNote } from '../Music';
+import Fret from '../components/Fret';
 
 const isNoteSelected = (notes, note, fret, string) => {
   return !_.isNil(findNote(notes, {note, fret, string}));
@@ -16,9 +17,9 @@ const frets = ({notes, openNote, frets}, selectFret) => {
   let currentNote = openNote;
 
   for (var i = 0; i <= frets; i++) {
-    retval.unshift(
-      <Fret key={i} 
-            fret={i} 
+    retval.push(
+      <Fret key={i}
+            fret={i}
             selected={isNoteSelected(notes, currentNote, i, openNote)}
             selectFret={selectFret(currentNote, i, openNote)}
             note={currentNote}/>);
@@ -26,29 +27,7 @@ const frets = ({notes, openNote, frets}, selectFret) => {
     currentNote = note.simplify(oneFretUp(currentNote));
   }
 
-  return retval.reverse();
-}
-
-class Fret extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { selected: false };
-  }
-
-  onClick() {
-    this.props.selectFret(this.props.fret);
-  }
-
-  selectedClass() {
-    return this.props.selected ? "selected" : "";
-  }
-
-  render() {
-    return <div onClick={this.onClick.bind(this)}
-                className={"fret " + this.selectedClass() }>
-      {this.props.note}
-    </div>;
-  }
+  return retval;
 }
 
 class String extends Component {

@@ -1,5 +1,5 @@
 import React from 'react';
 import { render } from './App';
-import './index.scss';
+import './styles/index.scss';
 
 render();

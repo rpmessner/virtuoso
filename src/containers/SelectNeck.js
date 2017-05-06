@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import String from './String';
+import SelectString from './SelectString';
 
-class Neck extends Component {
+class SelectNeck extends Component {
   render() {
+    let reversedStrings = [...this.props.strings].reverse()
+
     return <div className="neck">{
-      this.props.strings.map(
-        (note) => <String key={note}
+      reversedStrings.map(
+        (note) => <SelectString key={note}
                           openNote={note} /> 
       )
     }</div>;
@@ -15,7 +17,7 @@ class Neck extends Component {
 }
 
 function mapStateToProps(state) {
-  return { strings: state.strings.reverse() };
+  return { strings: state.strings };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -27,4 +29,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Neck);
+)(SelectNeck);

@@ -10,7 +10,7 @@ class ChordDetector extends Component {
     );
 
     return <div className="chord-detector">{
-      chords.map((c) => <div className="chord">{c}</div>)
+      chords.map((c) => <div key={c} className="chord">{c}</div>)
     }</div>;
   }
 }
