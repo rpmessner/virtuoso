@@ -11,7 +11,8 @@ export default class Fret extends Component {
 
   render() {
     return <div onClick={this.onClick.bind(this)}
-                className={"fret " + this.selectedClass() }>
+                className={"fret " + this.selectedClass() }
+                style={{left:this.props.left+"%", width: this.props.width+'%'}}>
       {this.props.note}
     </div>;
   }

@@ -124,7 +124,7 @@ export const getChordNotes = ({strings, chord}) => {
       let note = tonal.note.simplify(tonal.transpose(rootNote, interval));
       let fret = semitones(tonal.interval(s, note));
 
-      next = { note, string: s, fret, };      
+      next = { note, string: s, fret, intervalName: interval, interval: intervalInt };
     }
 
     return [...coll, next]

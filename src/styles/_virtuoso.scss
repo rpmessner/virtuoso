@@ -1,3 +1,7 @@
+body { 
+  margin: 0
+}
+
 .virtuoso {
   text-align: center;
 }
@@ -11,12 +15,55 @@
   width: 100%;
   border: 1px solid blue;
   text-align: left;
+  position: relative;
+  height: 40px;
+
 }
 
 .fret {
   display: inline-block;
   padding: 0.5em;
+  box-sizing: border-box;  
+  position: absolute;
+  height: 100%;
+  text-align: center;
+  border-left: 1px solid black;
+  z-index: 4;
   &.selected {
     background-color: green;
+  }
+}
+
+$dot-size: 20px;
+%dot {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  width: $dot-size;
+  height: $dot-size;
+  border-radius: $dot-size;
+  background-color: blue;
+}
+
+.string:nth-child(3n) {
+  .fret:nth-child(13) {
+    &:before {
+      top: -30px;
+      @extend %dot;
+    }
+  }
+}
+.string {
+  .fret:nth-child(1) {
+    border-right: 6px solid black;
+  }
+}
+.string:nth-child(3) {
+  .fret:nth-child(4), .fret:nth-child(6), .fret:nth-child(8), .fret:nth-child(10),
+  .fret:nth-child(16), .fret:nth-child(18), .fret:nth-child(20), .fret:nth-child(22) {
+    &:before {
+      top: 30px;
+      @extend %dot;
+    }
   }
 }
