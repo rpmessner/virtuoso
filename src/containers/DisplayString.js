@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { transpose, note } from 'tonal';
 import { selectChordRoot } from '../Actions';
-import { isNoteEqual, findNote } from '../Music';
+import { getRootFret, isNoteEqual, findNote } from '../Music';
 
 import Fret from '../components/Fret'
 
@@ -15,7 +15,7 @@ const frets = ({selectedNote, notes, index, strings, chord, openNote, frets, sel
     let isFretSelected = false;
 
     if (selectedNote.string === openNote
-       // && currentNote === selectedNote.note
+        && currentNote === selectedNote.note
         && selectedNote.fret === i) {
       isFretSelected = true;
     }
@@ -24,7 +24,7 @@ const frets = ({selectedNote, notes, index, strings, chord, openNote, frets, sel
       <Fret key={i}
             fret={i}
             selected={isFretSelected}
-            selectFret={selectChordRoot.bind(null, i)}
+            selectFret={selectChordRoot.bind(null, i, strings, chord)}
             note={currentNote}/>);
 
     currentNote = note.simplify(oneFretUp(currentNote));
@@ -52,8 +52,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectChordRoot(fret) {
-      dispatch(selectChordRoot(fret));
+    selectChordRoot(fret, strings, chord) {
+      dispatch(selectChordRoot(getRootFret(fret, strings, chord)));
     }
   }
 }
