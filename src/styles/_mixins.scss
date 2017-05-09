@@ -1,0 +1,53 @@
+$triangleSize: 5px;
+@mixin triangle($direction, $color, $forward, $left, $right) {
+  $color: blue !default;
+  $direction: up !default;
+  $forward: $triangleSize !default;
+  $left: $triangleSize !default;
+  $right: $triangleSize !default;
+  height: 0;
+  width: 0;
+
+  @if $direction == up {
+    border-bottom: $forward solid $color;
+    border-right: $right solid transparent;
+    border-left: $left solid transparent;
+    border-top: 0;
+  } @else if $direction == down {
+    border-top: $forward solid $color;
+    border-right: $left solid transparent;
+    border-left: $right solid transparent;
+    border-bottom: 0;
+  } @else if $direction == left {
+    border-right: $forward solid $color;
+    border-top: $left solid transparent;
+    border-bottom: $right solid transparent;
+    border-left: 0;
+  } @else {
+    border-left: $forward solid $color;
+    border-top: $right solid transparent;
+    border-bottom: $left solid transparent;
+    border-right: 0;
+  }
+} 
+
+@mixin box-shadow($params...) {
+  box-shadow: $params;
+  -moz-box-shadow: $params;
+  -webkit-box-shadow: $params;
+  box-shadow: $params;
+}
+
+@mixin border-radius($radius...) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+@mixin gradient-vertical($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Opera 12
+  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down
+}

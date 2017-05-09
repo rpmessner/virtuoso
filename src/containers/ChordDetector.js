@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import tonal, { chord } from 'tonal';
+import { chord } from 'tonal';
 
 class ChordDetector extends Component {
-  render() {
-
+  chords() {
     let chords = chord.detect(
       this.props.notes.map((n) => n.note).join(" ")
     );
 
-    return <div className="chord-detector">{
-      chords.map((c) => <div key={c} className="chord">{c}</div>)
-    }</div>;
+    if (chords.length > 0) {
+      return chords.map(
+        (c, i) => {
+          let joiner = i + 1 < chords.length ? " or " : '';
+          return <span key={c} className="chord">{c + joiner}</span>;
+        }
+      );
+    } else {
+       return <span>No Chord Detected</span>
+    }
+  }
+
+  render() {
+    return <fieldset className="chord-detector controls">
+      <div className="info">{this.chords()}</div>
+    </fieldset>;
   }
 }
 

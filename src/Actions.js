@@ -10,6 +10,7 @@ export const Types = {
   SELECT_CHORD_STRING_SET: 'SELECT_CHORD_STRING_SET',
   SELECT_CHORD_QUALITY: 'SELECT_CHORD_QUALITY',
   SELECT_CHORD_FRET: 'SELECT_CHORD_ROOT_FRET',
+  SELECT_CHORD_ROOT: 'SELECT_CHORD_ROOT_NOTE',
   SELECT_CHORD_INVERSION: 'SELECT_CHORD_INVERSION',
 }
 
@@ -17,8 +18,8 @@ export const selectChordInversion = (inversion) => {
   return { type: Types.SELECT_CHORD_INVERSION, inversion }
 }
 
-export const selectChordRoot = (fret) => {
-  return { type: Types.SELECT_CHORD_FRET, fret }
+export const selectChordRoot = (note) => {
+  return { type: Types.SELECT_CHORD_ROOT, note }
 }
 
 export const selectChordQuality = (quality) => {

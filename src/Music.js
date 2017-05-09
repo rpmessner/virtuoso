@@ -94,6 +94,14 @@ const chordQualityIntervals = {
   }
 }
 
+const getGeneralStringSet = (stringSet) => {
+  return _.reduce(generalStringSets, (coll, value, key) => {
+    if (_.includes(value, stringSet)) {
+      return key;
+    } else return coll
+  }, "");
+}
+
 export const isNoteEqual = (note, n) => {
   return n.note === note.note 
     && n.string === note.string
@@ -108,12 +116,9 @@ export const getChordNotes = ({strings, chord}) => {
   let {stringSet, root, quality, inversion} = chord;
 
   let generalStringSet = getGeneralStringSet(stringSet);
-  let intervalInts   = chordQualityIntervals[generalStringSet][quality][inversion];
-  let intervals      = _.map(intervalInts, fromSemitones);
-  let indices        = stringSetIndices[stringSet];
-  let rootStringNote = strings[indices[0]];
-  let rootNote       = tonal.transpose(rootStringNote, fromSemitones(root));
-
+  let intervalInts     = chordQualityIntervals[generalStringSet][quality][inversion];
+  let intervals        = _.map(intervalInts, fromSemitones);
+  let indices          = stringSetIndices[stringSet];
 
   let retval = _.reduce(strings, (coll, s, i) => {
     let intervalIndex = _.indexOf(indices, i), next = {};
@@ -121,24 +126,15 @@ export const getChordNotes = ({strings, chord}) => {
     if (intervalIndex >= 0) {
       let intervalInt = intervalInts[intervalIndex];
       let interval = intervals[intervalIndex];
-      let note = tonal.note.simplify(tonal.transpose(rootNote, interval));
+      let note = tonal.note.simplify(tonal.transpose(root, interval));
       let fret = semitones(tonal.interval(s, note));
 
       next = { note, string: s, fret, intervalName: interval, interval: intervalInt };
     }
-
     return [...coll, next]
   }, []);
 
   return retval;
-}
-
-const getGeneralStringSet = (stringSet) => {
-  return _.reduce(generalStringSets, (coll, value, key) => {
-    if (_.includes(value, stringSet)) {
-      return key;
-    } else return coll
-  }, "");
 }
 
 export const getRootFret = (selectedFret, strings, chord) => {
@@ -151,4 +147,25 @@ export const getRootFret = (selectedFret, strings, chord) => {
   let rootChordNote = _.find(chordNotes, (n) => n.string === stringRoot);
   let bassChordNote = _.find(chordNotes, (n) => !_.isNil(n.string));
   return selectedFret - intervals[0] + (bassChordNote.fret - rootChordNote.fret);
+}
+
+
+export const getFretDistances = (numFrets, length) => {
+	var retval = [0];
+
+  // actual scale length, not suitable as frets vary too wildly for display
+	// for (var i = 1; i <= numFrets; i++) {
+	// 	retval[i] = length - (length / Math.pow(2, (i / 12)));
+	// 	retval[i] = (Math.round(retval[i] * 1000) / 1000);
+	// }
+
+  // kluge for display
+	for (var i = 0; i <= numFrets; i++) {
+		retval[i] = 80 - i;
+	}
+
+  let sum = _.reduce(retval, (a, b) => a + b, 0);
+  let normalized = _.map(retval, (x) => (x * 100) / sum);
+
+  return normalized;
 }

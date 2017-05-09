@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-
-import { Provider } from 'react-redux';
-
 import createHistory from 'history/createBrowserHistory';
 
-import { ConnectedRouter as Router, routerReducer, routerMiddleware, push } from 'react-router-redux';
-
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'react-router-redux';
 import { Route } from 'react-router-dom';
-import { InitialState } from './Defaults';
 
 import reducers from './reducers';
 import pages from './pages';
 
+import ModeSelector from './containers/ModeSelector';
 
 const history = createHistory();
 
@@ -21,19 +18,22 @@ const middleware = routerMiddleware(history);
 
 const reducerHash = {...reducers, router: routerReducer};
 
-const reducer = combineReducers(reducerHash, applyMiddleware(middleware));
+const reducer = combineReducers(reducerHash);
 
-const Store = createStore(reducer);
+const Store = createStore(reducer, applyMiddleware(middleware));
 
 export function render() {
   ReactDOM.render(
-    <div className="virtuoso">
-      <Provider store={Store}>
-        <Router history={history}>
+    <Provider store={Store}>
+      <Router history={history}>
+        <div className="virtuoso">
+          <ModeSelector/>
           <Route exact path="/" component={pages.ChordSelect}/>
-        </Router>
-      </Provider>
-    </div>,
+          <Route path="/detector" component={pages.ChordDetect}/>
+          <Route path="/selector" component={pages.ChordSelect}/>
+        </div>
+      </Router>
+    </Provider>,
     document.getElementById('root')
   );
 }

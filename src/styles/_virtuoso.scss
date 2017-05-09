@@ -1,5 +1,19 @@
+@import "mixins";
+
+$dark-color: rgb(232, 231, 252);
+$light-color: rgb(236, 245, 255);
+$medium-color: rgb(246, 246, 252);
+$alert-color: rgb(235, 77, 92);
+$light-black-color: rgb(180, 180, 180);
+$black-color: rgb(80, 80, 80);
+
+html, * {
+  font-family: sans-serif;
+  color: $black-color;
+}
 body { 
-  margin: 0
+  margin: 0;
+
 }
 
 .virtuoso {
@@ -8,30 +22,41 @@ body {
 
 .neck {
   width: 100%;
-  border: 1px solid red;
+  border: 1px solid $black-color;
 }
 
 .string {
   width: 100%;
-  border: 1px solid blue;
   text-align: left;
   position: relative;
-  height: 40px;
-
+  box-sizing: border-box;  
 }
 
 .fret {
+  position: relative;
   display: inline-block;
-  padding: 0.5em;
+  padding: 0;
   box-sizing: border-box;  
-  position: absolute;
-  height: 100%;
   text-align: center;
-  border-left: 1px solid black;
+  border-left: 0.2em solid $light-black-color;
   z-index: 4;
-  &.selected {
-    background-color: green;
-  }
+}
+
+.note {
+  display: inline-block;
+  background-color: $light-color;
+  border-radius: 50px;
+  box-sizing: border-box;
+  $size: 50px;
+  line-height:$size;
+  width: $size;
+  height: $size;
+  max-width: 90%;
+  max-height: 90%;
+  margin: 10px 0;
+  cursor: pointer;
+  &.selected { background-color: $dark-color; }
+  &:hover { background-color: $medium-color; }
 }
 
 $dot-size: 20px;
@@ -42,28 +67,158 @@ $dot-size: 20px;
   width: $dot-size;
   height: $dot-size;
   border-radius: $dot-size;
-  background-color: blue;
+  background-color: #ddd;
 }
 
-.string:nth-child(3n) {
+.string:nth-child(3), .string:nth-child(5) {
   .fret:nth-child(13) {
     &:before {
-      top: -30px;
+      top: -10px;
+      right: 19px;
       @extend %dot;
     }
   }
 }
 .string {
   .fret:nth-child(1) {
-    border-right: 6px solid black;
+    border-right: 4px solid $black-color;
   }
 }
 .string:nth-child(3) {
   .fret:nth-child(4), .fret:nth-child(6), .fret:nth-child(8), .fret:nth-child(10),
   .fret:nth-child(16), .fret:nth-child(18), .fret:nth-child(20), .fret:nth-child(22) {
+    position: relative;
     &:before {
-      top: 30px;
+      top: 60px;
+      left: 50%;
+      margin-left: -10px;
       @extend %dot;
     }
   }
+}
+
+$shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
+
+.switch {
+  background-color: $light-color;
+  height: 20px;
+  width: 60px;
+  margin-right: 1em;
+  @include border-radius(15px);
+  position: relative;
+
+  .toggle {
+    @include box-shadow($shadow);
+    background-color: $medium-color;
+    position: absolute;
+    left: 0;
+    top: -6px;
+    height: 30px;
+    width: 30px;
+    margin-left: 0;
+
+    @include border-radius(30px);
+
+    transition: left 0.4s ease-in-out, margin-left 0.4s ease-in-out;
+
+    cursor: pointer;
+
+    &.selected {
+      left: 100%;
+      margin-left: -30px;
+
+    }
+  }
+}
+
+.controls {
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  height: 80px;
+  z-index: 20;
+  position: relative;
+  &.chord-selector { text-align: right; padding-right: 5em;}
+  .dropdown, .info, .switch {
+    max-width: 25%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .dropdown { vertical-align: top }
+}
+
+.mode-selector {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  z-index: 100;
+  font-size: 0.8em;
+  .switch { display: inline-block; margin: 0 0.5em;}
+  span, .switch { vertical-align: middle; }
+  height: 40px;
+}
+
+.info {
+  height: 55px;
+  padding: 1.2em 2em;
+  box-sizing: border-box;
+  background-color: $light-color;
+  @include box-shadow($shadow);    
+  @include border-radius(5px);
+  background-color: $medium-color;
+}
+
+.dropdown {
+  text-align: center;
+  background-color: $light-color;
+  box-sizing: border-box;
+  margin: 0 0 0 1em;
+
+  @include box-shadow($shadow);    
+  @include border-radius(5px);
+
+  ul {
+    padding: 0;
+    margin: 0;
+    transition: max-height 0.5s ease-in;
+    max-height: 55px;
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+      content: '';
+      @include triangle(down, #bbb, 8px, 8px, 8px);
+      position: absolute;
+      width: 0px;
+      height: 5px;
+      top: 27px;
+      right: 15px;
+    }
+  }
+
+  &:hover ul {
+    max-height: 700px;
+  }
+
+  li { 
+    padding: 1.4em 0;
+    padding-left: 2em;
+    padding-right: 2.5em;
+    list-style: none; 
+    position: relative;
+    .avatar {
+      position: relative;
+      display: inline-block;
+      left: 0;
+      top: 6px;
+      margin-right: 10px;
+    }
+  }
+  li.selected {
+    background-color: $dark-color;
+  }
+  li.dropdown-item:hover {
+    background-color: $medium-color;
+  }
+
 }

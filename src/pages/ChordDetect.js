@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import ChordDetector from '../containers/ChordDetector';
-import SelectNeck from '../containers/SelectNeck';
+import ChordDetectNeck from '../containers/ChordDetectNeck';
 
 export default class ChordDetect extends Component {
   render() {
     return (
       <div className="chord-detect">
-        <SelectNeck />
         <ChordDetector />
+        <ChordDetectNeck />
       </div>
     );
   }

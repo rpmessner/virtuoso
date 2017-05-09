@@ -24,6 +24,7 @@ export function notes(state = InitialState.notes, action) {
         retval = _.filter(state, _.negate(isEqualToFound));
       }
       break;
+    default: break;
   }
 
   return retval;
@@ -51,12 +52,16 @@ export function chord(state = InitialState.chord, action) {
     case Types.SELECT_CHORD_FRET:
       retval = _.merge({}, state, { root: action.fret });
       break;
+    case Types.SELECT_CHORD_ROOT:
+      retval = _.merge({}, state, { root: action.note });
+      break;
     case Types.SELECT_CHORD_QUALITY:
       retval =_.merge({}, state, { quality: action.quality });
       break;
     case Types.SELECT_CHORD_STRING_SET:
       retval =_.merge({}, state, { stringSet: action.stringSet });
       break;
+    default: break;
   }
   console.log(retval);
   return retval;

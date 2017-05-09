@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
 import ChordSelector from '../containers/ChordSelector';
-import DisplayNeck from '../containers/DisplayNeck';
+import ChordSelectNeck from '../containers/ChordSelectNeck';
 
 class ChordSelect extends Component {
   render() {
     return (<div className="chord-select">
-        <DisplayNeck />
         <ChordSelector />
+        <ChordSelectNeck />
       </div>
     )
   }

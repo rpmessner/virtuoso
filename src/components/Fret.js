@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 
 export default class Fret extends Component {
-  onClick() {
-    this.props.selectFret(this.props.fret);
-  }
-
-  selectedClass() {
-    return this.props.selected ? "selected" : "";
-  }
-
   render() {
-    return <div onClick={this.onClick.bind(this)}
-                className={"fret " + this.selectedClass() }
-                style={{left:this.props.left+"%", width: this.props.width+'%'}}>
-      {this.props.note}
+    return <div className={"fret"}
+                style={{width: this.props.width+'%'}}>
+      {React.Children.only(this.props.children)}
     </div>;
   }
 }
 
-Fret.defaultProps = { selectFret() { }, selected: false, note: '' }

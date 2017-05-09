@@ -1,0 +1,9 @@
+* Styling
+
+* Functionalty
+** Chords
+ -- find by key center & numeral
+ -- display intervals
+** Scales
+** Mobile
+
