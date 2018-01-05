@@ -1,19 +1,21 @@
-@import "mixins";
+@import 'mixins';
+$white-color: #fcf5ed;
+$dark-color: #402f2b;
+$light-color: #e6d5c3;
+$medium-color: #977978;
+$alert-color: #cb492a;
+$light-black-color: #706e72;
+$black-color: #414042;
 
-$dark-color: rgb(232, 231, 252);
-$light-color: rgb(236, 245, 255);
-$medium-color: rgb(246, 246, 252);
-$alert-color: rgb(235, 77, 92);
-$light-black-color: rgb(180, 180, 180);
-$black-color: rgb(80, 80, 80);
-
-html, * {
+html,
+* {
   font-family: sans-serif;
-  color: $black-color;
 }
-body { 
-  margin: 0;
 
+body {
+  color: $black-color;
+  background-color: $light-color;
+  margin: 0;
 }
 
 .virtuoso {
@@ -29,14 +31,14 @@ body {
   width: 100%;
   text-align: left;
   position: relative;
-  box-sizing: border-box;  
+  box-sizing: border-box;
 }
 
 .fret {
   position: relative;
   display: inline-block;
   padding: 0;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   text-align: center;
   border-left: 0.2em solid $light-black-color;
   z-index: 4;
@@ -44,19 +46,24 @@ body {
 
 .note {
   display: inline-block;
-  background-color: $light-color;
+  background-color: $medium-color;
   border-radius: 50px;
   box-sizing: border-box;
   $size: 50px;
-  line-height:$size;
+  line-height: $size;
   width: $size;
   height: $size;
   max-width: 90%;
   max-height: 90%;
   margin: 10px 0;
   cursor: pointer;
-  &.selected { background-color: $dark-color; }
-  &:hover { background-color: $medium-color; }
+  color: $white-color;
+  &.selected {
+    background-color: $dark-color;
+  }
+  &:hover {
+    background-color: $alert-color;
+  }
 }
 
 $dot-size: 20px;
@@ -67,10 +74,11 @@ $dot-size: 20px;
   width: $dot-size;
   height: $dot-size;
   border-radius: $dot-size;
-  background-color: #ddd;
+  background-color: $light-black-color;
 }
 
-.string:nth-child(3), .string:nth-child(5) {
+.string:nth-child(3),
+.string:nth-child(5) {
   .fret:nth-child(13) {
     &:before {
       top: -10px;
@@ -85,8 +93,14 @@ $dot-size: 20px;
   }
 }
 .string:nth-child(3) {
-  .fret:nth-child(4), .fret:nth-child(6), .fret:nth-child(8), .fret:nth-child(10),
-  .fret:nth-child(16), .fret:nth-child(18), .fret:nth-child(20), .fret:nth-child(22) {
+  .fret:nth-child(4),
+  .fret:nth-child(6),
+  .fret:nth-child(8),
+  .fret:nth-child(10),
+  .fret:nth-child(16),
+  .fret:nth-child(18),
+  .fret:nth-child(20),
+  .fret:nth-child(22) {
     position: relative;
     &:before {
       top: 60px;
@@ -97,10 +111,10 @@ $dot-size: 20px;
   }
 }
 
-$shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
+$shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.1);
 
 .switch {
-  background-color: $light-color;
+  background-color: $medium-color;
   height: 20px;
   width: 60px;
   margin-right: 1em;
@@ -109,7 +123,7 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
 
   .toggle {
     @include box-shadow($shadow);
-    background-color: $medium-color;
+    background-color: $alert-color;
     position: absolute;
     left: 0;
     top: -6px;
@@ -126,7 +140,6 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
     &.selected {
       left: 100%;
       margin-left: -30px;
-
     }
   }
 }
@@ -138,13 +151,20 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
   height: 80px;
   z-index: 20;
   position: relative;
-  &.chord-selector { text-align: right; padding-right: 5em;}
-  .dropdown, .info, .switch {
+  &.chord-selector {
+    text-align: right;
+    padding-right: 5em;
+  }
+  .dropdown,
+  .info,
+  .switch {
     max-width: 25%;
     display: inline-block;
     vertical-align: middle;
   }
-  .dropdown { vertical-align: top }
+  .dropdown {
+    vertical-align: top;
+  }
 }
 
 .mode-selector {
@@ -153,8 +173,14 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
   left: 20px;
   z-index: 100;
   font-size: 0.8em;
-  .switch { display: inline-block; margin: 0 0.5em;}
-  span, .switch { vertical-align: middle; }
+  .switch {
+    display: inline-block;
+    margin: 0 0.5em;
+  }
+  span,
+  .switch {
+    vertical-align: middle;
+  }
   height: 40px;
 }
 
@@ -163,18 +189,19 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
   padding: 1.2em 2em;
   box-sizing: border-box;
   background-color: $light-color;
-  @include box-shadow($shadow);    
+  color: $white-color;
+  @include box-shadow($shadow);
   @include border-radius(5px);
   background-color: $medium-color;
 }
 
 .dropdown {
   text-align: center;
-  background-color: $light-color;
+  background-color: $white-color;
   box-sizing: border-box;
   margin: 0 0 0 1em;
 
-  @include box-shadow($shadow);    
+  @include box-shadow($shadow);
   @include border-radius(5px);
 
   ul {
@@ -187,7 +214,7 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
 
     &:before {
       content: '';
-      @include triangle(down, #bbb, 8px, 8px, 8px);
+      @include triangle(down, $dark-color, 8px, 8px, 8px);
       position: absolute;
       width: 0px;
       height: 5px;
@@ -200,11 +227,11 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
     max-height: 700px;
   }
 
-  li { 
+  li {
     padding: 1.4em 0;
     padding-left: 2em;
     padding-right: 2.5em;
-    list-style: none; 
+    list-style: none;
     position: relative;
     .avatar {
       position: relative;
@@ -214,11 +241,13 @@ $shadow: 1px 1px 2px 1px rgba(0.0, 0.0, 0.0, 0.1);
       margin-right: 10px;
     }
   }
+
   li.selected {
-    background-color: $dark-color;
+    background-color: $alert-color;
+    color: $white-color;
   }
+
   li.dropdown-item:hover {
     background-color: $medium-color;
   }
-
 }
